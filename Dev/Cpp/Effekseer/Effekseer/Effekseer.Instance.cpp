@@ -688,6 +688,12 @@ void Instance::Update( float deltaFrame, bool shown )
 
 	float originalTime = m_LivingTime;
 
+	/* 時間の進行 */
+	if (m_stepTime)
+	{
+		m_LivingTime += deltaFrame;
+	}
+
 	if(shown)
 	{
 		CalculateMatrix( deltaFrame );
@@ -712,12 +718,6 @@ void Instance::Update( float deltaFrame, bool shown )
 	{
 		CalculateParentMatrix( deltaFrame );
 		m_pParent = nullptr;
-	}
-
-	/* 時間の進行 */
-	if(  m_stepTime )
-	{
-		m_LivingTime += deltaFrame;
 	}
 
 	// Create child particles
