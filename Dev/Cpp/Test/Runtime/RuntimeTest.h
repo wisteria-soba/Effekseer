@@ -7,3 +7,5 @@ void BasicRuntimeTest();
 void UpdateHandleTest();
 
 void CustomAllocatorTest();
+
+void SIMDTest();

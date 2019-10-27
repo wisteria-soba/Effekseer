@@ -131,10 +131,11 @@ int main()
 #endif
 
 #ifdef __EFFEKSEER_TEST_BUILD_AS_CMAKE__
+	CustomAllocatorTest();
+	SIMDTest();
 	BasicRuntimeTest();
 	UpdateHandleTest();
 	//BasicRuntimeDeviceLostTest();
-	CustomAllocatorTest();
 #else
 
 	//TestShowEfcAssets();

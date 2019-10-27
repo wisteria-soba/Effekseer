@@ -99,7 +99,9 @@ file(GLOB effekseer_h
 	Effekseer/Effekseer/Material/*.h
 	Effekseer/Effekseer/Parameter/*.h
 	Effekseer/Effekseer/IO/*.h
-	Effekseer/Effekseer/Utils/*.h)
+	Effekseer/Effekseer/Utils/*.h
+	Effekseer/Effekseer/SIMD/*.h	
+)
 
 set(effekseer_src
 	Effekseer/Effekseer/Effekseer.Client.cpp
