@@ -15,7 +15,7 @@ inline void transpose(
 	outz = inz;
 	outw = inw;
 
-	_MM_TRANSPOSE4_PS(outx.s, outy.s, outz.s, outw.s);
+	_MM_TRANSPOSE4_PS(outx.sf, outy.sf, outz.sf, outw.sf);
 }
 
 } // namespace Effekseer
