@@ -1,6 +1,6 @@
 
-#ifndef __EFFEKSEER_SIMD_CONVERSION_H__
-#define __EFFEKSEER_SIMD_CONVERSION_H__
+#ifndef __EFFEKSEER_SIMD_UTILS_H__
+#define __EFFEKSEER_SIMD_UTILS_H__
 
 #include "../Effekseer.Vector2D.h"
 #include "../Effekseer.Vector3D.h"
@@ -14,6 +14,25 @@
 namespace Effekseer
 {
 	
+template <size_t align>
+class AlignedAllocationPolicy {
+public:
+	static void* operator new(size_t size) {
+#ifdef _MSC_VER
+		return _mm_malloc(size, align);
+#else
+		return memalign(align, size);
+#endif
+	}
+	static void operator delete(void* ptr) {
+#ifdef _MSC_VER
+		_mm_free(ptr);
+#else
+		return free(ptr);
+#endif
+	}
+};
+
 inline Vector2D ToStruct(const Vec2f& o)
 {
 	return {o.GetX(), o.GetY()};

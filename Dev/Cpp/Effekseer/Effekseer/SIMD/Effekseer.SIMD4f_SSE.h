@@ -73,12 +73,14 @@ struct alignas(16) SIMD4f
 	template<size_t LANE>
 	static SIMD4f MulLane(const SIMD4f& lhs, const SIMD4f& rhs)
 	{
+		static_assert(LANE < 4, "LANE is must be less than 4.");
 		return SIMD4f{_mm_mul_ps(lhs.sf, _mm_shuffle_ps(rhs.sf, rhs.sf, _MM_SHUFFLE(LANE, LANE, LANE, LANE)))};
 	}
 
 	template<size_t LANE>
 	static SIMD4f MulAddLane(const SIMD4f& a, const SIMD4f& b, const SIMD4f& c)
 	{
+		static_assert(LANE < 4, "LANE is must be less than 4.");
 #ifdef __AVX2__
 		return SIMD4f{_mm_fmadd_ps(b.sf, _mm_shuffle_ps(c.sf, c.sf, _MM_SHUFFLE(LANE, LANE, LANE, LANE)), a.sf)};
 #else
@@ -89,6 +91,7 @@ struct alignas(16) SIMD4f
 	template<size_t LANE>
 	static SIMD4f MulSubLane(const SIMD4f& a, const SIMD4f& b, const SIMD4f& c)
 	{
+		static_assert(LANE < 4, "LANE is must be less than 4.");
 #ifdef __AVX2__
 		return SIMD4f{_mm_fnmadd_ps(b.sf, _mm_shuffle_ps(c.sf, c.sf, _MM_SHUFFLE(LANE, LANE, LANE, LANE)), a.sf)};
 #else
@@ -99,10 +102,10 @@ struct alignas(16) SIMD4f
 	template <uint32_t indexX, uint32_t indexY, uint32_t indexZ, uint32_t indexW>
 	static SIMD4f Swizzle(const SIMD4f& v)
 	{
-		static_assert(indexX < 4);
-		static_assert(indexY < 4);
-		static_assert(indexZ < 4);
-		static_assert(indexW < 4);
+		static_assert(indexX < 4, "indexX is must be less than 4.");
+		static_assert(indexY < 4, "indexY is must be less than 4.");
+		static_assert(indexZ < 4, "indexZ is must be less than 4.");
+		static_assert(indexW < 4, "indexW is must be less than 4.");
 		return SIMD4f{_mm_shuffle_ps(v.sf, v.sf, _MM_SHUFFLE(indexW, indexZ, indexY, indexX))};
 	}
 
@@ -262,7 +265,7 @@ inline SIMD4f SIMD4f::NearEqual(const SIMD4f& lhs, const SIMD4f& rhs, float epsi
 
 inline SIMD4f SIMD4f::IsZero(const SIMD4f& in, float epsilon)
 {
-	return LessEqual(Abs(i), SIMD4f(epsilon));
+	return LessEqual(Abs(in), SIMD4f(epsilon));
 }
 
 } // namespace Effekseer

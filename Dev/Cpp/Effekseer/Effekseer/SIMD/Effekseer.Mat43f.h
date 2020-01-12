@@ -41,7 +41,7 @@ struct Mat43f
 
 	static bool Equal(const Mat43f& lhs, const Mat43f& rhs, float epsilon = DefaultEpsilon);
 
-	static Mat43f SRT(const Vec3f& s, const Mat43f& r, const Vec3f t);
+	static Mat43f SRT(const Vec3f& s, const Mat43f& r, const Vec3f& t);
 
 	static Mat43f Scaling(float x, float y, float z);
 

@@ -5,7 +5,7 @@
 //----------------------------------------------------------------------------------
 #include "Effekseer.Effect.h"
 #include "Effekseer.EffectImplemented.h"
-#include "SIMD/Effekseer.ConversionSIMD.h"
+#include "SIMD/Effekseer.SIMDUtils.h"
 
 #include "Effekseer.EffectNode.h"
 #include "Effekseer.Instance.h"

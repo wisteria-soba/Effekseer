@@ -117,7 +117,7 @@ bool Mat43f::Equal(const Mat43f& lhs, const Mat43f& rhs, float epsilon)
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-Mat43f Mat43f::SRT(const Vec3f& s, const Mat43f& r, const Vec3f t)
+Mat43f Mat43f::SRT(const Vec3f& s, const Mat43f& r, const Vec3f& t)
 {
 	Mat43f ret;
 	ret.X = r.X * s.s;

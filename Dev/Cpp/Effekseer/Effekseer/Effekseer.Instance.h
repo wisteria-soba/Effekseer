@@ -306,7 +306,7 @@ public:
 
 	//! calculate dynamic equation and return a result
 	template <typename S> 
-	Vec3f ApplyEq(const int& dpInd, Vec3f originalParam, const S& scale, const S& scaleInv);
+	Vec3f ApplyEq(const int& dpInd, const Vec3f& originalParam, const S& scale, const S& scaleInv);
 
 	//! calculate dynamic equation and return a result
 	random_float ApplyEq(const RefMinMax& dpInd, random_float originalParam);

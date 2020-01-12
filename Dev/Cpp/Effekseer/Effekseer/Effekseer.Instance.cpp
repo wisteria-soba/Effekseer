@@ -63,20 +63,21 @@ void Instance::ApplyEq(T& dstParam, Effect* e, InstanceGlobal* instg, int dpInd,
 	}
 }
 
-template <typename S> Vec3f Instance::ApplyEq(const int& dpInd, Vec3f originalParam, const S& scale, const S& scaleInv)
+template <typename S> Vec3f Instance::ApplyEq(const int& dpInd, const Vec3f& originalParam, const S& scale, const S& scaleInv)
 {
 	const auto& e = this->m_pEffectNode->m_effect;
 	const auto& instg = this->m_pContainer->GetRootInstance();
 
+	Vec3f param = originalParam;
 	if (dpInd >= 0)
 	{
-		originalParam *= Vec3f(scaleInv[0], scaleInv[1], scaleInv[2]);
+		param *= Vec3f(scaleInv[0], scaleInv[1], scaleInv[2]);
 
-		ApplyEq(originalParam, e, instg, dpInd, originalParam);
+		ApplyEq(param, e, instg, dpInd, param);
 
-		originalParam *= Vec3f(scale[0], scale[1], scale[2]);
+		param *= Vec3f(scale[0], scale[1], scale[2]);
 	}
-	return originalParam;
+	return param;
 }
 
 random_float Instance::ApplyEq(const RefMinMax& dpInd, random_float originalParam)

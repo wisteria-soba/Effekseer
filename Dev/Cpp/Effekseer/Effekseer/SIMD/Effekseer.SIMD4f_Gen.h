@@ -109,28 +109,31 @@ struct alignas(16) SIMD4f
 	template<size_t LANE>
 	static SIMD4f MulLane(const SIMD4f& lhs, const SIMD4f& rhs)
 	{
+		static_assert(LANE < 4, "LANE is must be less than 4.");
 		return lhs * rhs.f[LANE];
 	}
 
 	template<size_t LANE>
 	static SIMD4f MulAddLane(const SIMD4f& a, const SIMD4f& b, const SIMD4f& c)
 	{
+		static_assert(LANE < 4, "LANE is must be less than 4.");
 		return a + b * c.f[LANE];
 	}
 
 	template<size_t LANE>
 	static SIMD4f MulSubLane(const SIMD4f& a, const SIMD4f& b, const SIMD4f& c)
 	{
+		static_assert(LANE < 4, "LANE is must be less than 4.");
 		return a - b * c.f[LANE];
 	}
 
 	template <uint32_t indexX, uint32_t indexY, uint32_t indexZ, uint32_t indexW>
 	static SIMD4f Swizzle(const SIMD4f& in)
 	{
-		static_assert(indexX < 4);
-		static_assert(indexY < 4);
-		static_assert(indexZ < 4);
-		static_assert(indexW < 4);
+		static_assert(indexX < 4, "indexX is must be less than 4.");
+		static_assert(indexY < 4, "indexY is must be less than 4.");
+		static_assert(indexZ < 4, "indexZ is must be less than 4.");
+		static_assert(indexW < 4, "indexW is must be less than 4.");
 		return SIMD4f{in.f[indexX], in.f[indexY], in.f[indexZ], in.f[indexW]};
 	}
 
