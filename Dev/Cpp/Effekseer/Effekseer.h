@@ -295,30 +295,6 @@ T Clamp( T t, U max_, V min_ )
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-inline float NormalizeAngle(float angle)
-{
-    int32_t ofs = (*(int32_t*)&angle & 0x80000000) | 0x3F000000; 
-    return (angle - ((int)(angle * 0.159154943f + *(float*)&ofs) * 6.283185307f)); 
-}
-
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
-inline void SinCos(float x, float& s, float& c)
-{
-	x = NormalizeAngle(x);
-	float x2 = x * x;
-	float x4 = x * x * x * x;
-	float x6 = x * x * x * x * x * x;
-	float x8 = x * x * x * x * x * x * x * x;
-	float x10 = x * x * x * x * x * x * x * x * x * x;
-	s = x * (1.0f - x2 / 6.0f + x4 / 120.0f - x6 / 5040.0f + x8 / 362880.0f - x10 / 39916800.0f);
-	c = 1.0f - x2 / 2.0f + x4 / 24.0f - x6 / 720.0f + x8 / 40320.0f - x10 / 3628800.0f;
-}
-
-//----------------------------------------------------------------------------------
-//
-//----------------------------------------------------------------------------------
 /**
 	@brief	文字コードを変換する。(UTF16 -> UTF8)
 	@param	dst	[out]	出力配列の先頭ポインタ
@@ -2897,7 +2873,7 @@ public:
 
 	struct InstanceParameter
 	{
-		Matrix43		SRTMatrix43;
+		Matrix43	SRTMatrix43;
 		Color		AllColor;
 
 		// Lower left, Lower right, Upper left, Upper right
@@ -2982,7 +2958,7 @@ struct NodeRendererTextureUVTypeParameter;
 			int32_t			InstanceCount;
 			int32_t			InstanceIndex;
 			Matrix43		SRTMatrix43;
-			Color		AllColor;
+			Color			AllColor;
 
 			// Lower left, Lower right, Upper left, Upper right
 			Color	Colors[4];
@@ -3071,10 +3047,10 @@ public:
 	struct InstanceParameter
 	{
 		Matrix43	SRTMatrix43;
-		float ViewingAngleStart;
-		float ViewingAngleEnd;
 		Vector2D	OuterLocation;
 		Vector2D	InnerLocation;
+		float		ViewingAngleStart;
+		float		ViewingAngleEnd;
 		float		CenterRatio;
 		Color		OuterColor;
 		Color		CenterColor;

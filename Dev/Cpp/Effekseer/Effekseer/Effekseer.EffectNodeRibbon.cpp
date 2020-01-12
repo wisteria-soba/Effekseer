@@ -7,6 +7,7 @@
 #include "Effekseer.Effect.h"
 #include "Effekseer.EffectNode.h"
 #include "Effekseer.Vector3D.h"
+#include "SIMD/Effekseer.ConversionSIMD.h"
 
 #include "Effekseer.Instance.h"
 #include "Effekseer.InstanceContainer.h"
@@ -207,7 +208,7 @@ void EffectNodeRibbon::Rendering(const Instance& instance, const Instance* next_
 		}
 
 		m_instanceParameter.AllColor = _color;
-		m_instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
+		m_instanceParameter.SRTMatrix43 = ToStruct(instance.GetGlobalMatrix43());
 
 		Color color_l = _color;
 		Color color_r = _color;

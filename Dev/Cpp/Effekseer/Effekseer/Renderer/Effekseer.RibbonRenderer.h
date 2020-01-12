@@ -55,7 +55,7 @@ struct NodeRendererTextureUVTypeParameter;
 			int32_t			InstanceCount;
 			int32_t			InstanceIndex;
 			Matrix43		SRTMatrix43;
-			Color		AllColor;
+			Color			AllColor;
 
 			// Lower left, Lower right, Upper left, Upper right
 			Color	Colors[4];

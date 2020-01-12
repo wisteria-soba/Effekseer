@@ -57,10 +57,10 @@ public:
 	struct InstanceParameter
 	{
 		Matrix43	SRTMatrix43;
-		float ViewingAngleStart;
-		float ViewingAngleEnd;
 		Vector2D	OuterLocation;
 		Vector2D	InnerLocation;
+		float		ViewingAngleStart;
+		float		ViewingAngleEnd;
 		float		CenterRatio;
 		Color		OuterColor;
 		Color		CenterColor;

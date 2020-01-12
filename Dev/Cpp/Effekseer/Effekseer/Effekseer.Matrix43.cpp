@@ -6,10 +6,8 @@
 #include "Effekseer.Vector3D.h"
 #include "Effekseer.Matrix43.h"
 #include "Effekseer.Matrix44.h"
+#include "Effekseer.Math.h"
 #include <limits>
-
-#include "SIMD/Effekseer.Mat44f.h"
-#include "SIMD/Effekseer.Mat44fBlock4.h"
 
 //----------------------------------------------------------------------------------
 //

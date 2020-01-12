@@ -7,8 +7,10 @@
 //----------------------------------------------------------------------------------
 #include "../Effekseer.Base.h"
 #include "../Effekseer.Vector2D.h"
-#include "../Effekseer.Vector3D.h"
 #include "../Effekseer.Matrix43.h"
+#include "../SIMD/Effekseer.Vec2f.h"
+#include "../SIMD/Effekseer.Vec3f.h"
+#include "../SIMD/Effekseer.Mat43f.h"
 #include "../Effekseer.Color.h"
 
 //----------------------------------------------------------------------------------
@@ -54,7 +56,7 @@ public:
 
 	struct InstanceParameter
 	{
-		Matrix43		SRTMatrix43;
+		Matrix43	SRTMatrix43;
 		Color		AllColor;
 
 		// Lower left, Lower right, Upper left, Upper right

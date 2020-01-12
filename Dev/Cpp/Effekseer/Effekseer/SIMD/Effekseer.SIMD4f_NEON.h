@@ -3,9 +3,19 @@
 #define __EFFEKSEER_SIMD4F_NEON_H__
 
 #include <arm_neon.h>
+#include "Effekseer.Math.h"
 
 namespace Effekseer
 {
+
+inline float Sqrt(float x)
+{
+	return std::sqrt(x);
+}
+inline float Rsqrt(float x)
+{
+	return 1.0f / std::sqrt(x);
+}
 
 /**
 	@brief	simd class for neon

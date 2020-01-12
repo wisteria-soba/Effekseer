@@ -168,7 +168,7 @@ void InstanceContainer::Update(bool recursive, float deltaFrame, bool shown)
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-void InstanceContainer::SetBaseMatrix(bool recursive, const Matrix43& mat)
+void InstanceContainer::SetBaseMatrix(bool recursive, const Mat43f& mat)
 {
 	if (m_pEffectNode->GetType() != EFFECT_NODE_TYPE_ROOT)
 	{

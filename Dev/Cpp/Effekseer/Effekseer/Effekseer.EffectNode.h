@@ -253,7 +253,7 @@ struct LocationAbsParameter
 
 		} none;
 
-		vector3d	gravity;
+		Vec3f	gravity;
 
 		struct {
 			float	force;
