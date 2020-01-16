@@ -159,7 +159,7 @@ void EffectNodeTrack::Rendering(const Instance& instance, const Instance* next_i
 		SetValues(m_instanceParameter.SizeMiddle, m_currentGroupValues.SizeMiddle, TrackSizeMiddle, t);
 		SetValues(m_instanceParameter.SizeBack, m_currentGroupValues.SizeBack, TrackSizeBack, t);
 
-		m_instanceParameter.SRTMatrix43 = ToStruct(instance.GetGlobalMatrix43());
+		m_instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
 
 		renderer->Rendering(m_nodeParameter, m_instanceParameter, m_userData);
 		m_instanceParameter.InstanceIndex++;

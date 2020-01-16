@@ -299,13 +299,13 @@ void EffectNodeRing::Rendering(const Instance& instance, const Instance* next_in
 		}
 
 		RingRenderer::InstanceParameter instanceParameter;
-		instanceParameter.SRTMatrix43 = ToStruct(instance.GetGlobalMatrix43());
+		instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
 
 		instanceParameter.ViewingAngleStart = instValues.startingAngle.current;
 		instanceParameter.ViewingAngleEnd = instValues.endingAngle.current;
 		
-		instanceParameter.OuterLocation = ToStruct(instValues.outerLocation.current);
-		instanceParameter.InnerLocation = ToStruct(instValues.innerLocation.current);
+		instanceParameter.OuterLocation = instValues.outerLocation.current;
+		instanceParameter.InnerLocation = instValues.innerLocation.current;
 
 		instanceParameter.CenterRatio = instValues.centerRatio.current;
 

@@ -148,7 +148,7 @@ void EffectNodeModel::Rendering(const Instance& instance, const Instance* next_i
 		nodeParameter.BasicParameterPtr = &RendererCommon.BasicParameter;
 
 		ModelRenderer::InstanceParameter instanceParameter;
-		instanceParameter.SRTMatrix43 = ToStruct(instance.GetGlobalMatrix43());
+		instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
 		instanceParameter.Time = (int32_t)instance.m_LivingTime;
 
 		instanceParameter.UV = instance.GetUV();

@@ -40,6 +40,9 @@ struct Vec2f
 	bool IsZero(float range = DefaultEpsilon) const;
 	Vec2f Normalize() const;
 
+	static Vec2f Load(const void* mem);
+	static void Store(void* mem, const Vec2f& i);
+
 	static Vec2f Sqrt(const Vec2f& i);
 	static Vec2f Rsqrt(const Vec2f& i);
 	static Vec2f Abs(const Vec2f& i);
@@ -80,12 +83,22 @@ inline Vec2f operator/(const Vec2f& lhs, float rhs)
 
 inline bool operator==(const Vec2f& lhs, const Vec2f& rhs)
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x03) == 0x3;
+	return (SIMD4f::MoveMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x03) == 0x3;
 }
 
 inline bool operator!=(const Vec2f& lhs, const Vec2f& rhs)
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x03) != 0x3;
+	return (SIMD4f::MoveMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x03) != 0x3;
+}
+
+inline Vec2f Vec2f::Load(const void* mem)
+{
+	return SIMD4f::Load2(mem);
+}
+
+inline void Vec2f::Store(void* mem, const Vec2f& i)
+{
+	SIMD4f::Store2(mem, i.s);
 }
 
 inline Vec2f Vec2f::Sqrt(const Vec2f& i)
@@ -115,7 +128,7 @@ inline Vec2f Vec2f::Max(const Vec2f& lhs, const Vec2f& rhs)
 
 inline bool Vec2f::Equal(const Vec2f& lhs, const Vec2f& rhs, float epsilon)
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::NearEqual(lhs.s, rhs.s, epsilon)) & 0x3) == 0x3;
+	return (SIMD4f::MoveMask(SIMD4f::NearEqual(lhs.s, rhs.s, epsilon)) & 0x3) == 0x3;
 }
 
 inline float Vec2f::LengthSq() const

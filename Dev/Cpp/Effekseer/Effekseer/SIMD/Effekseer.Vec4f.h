@@ -56,6 +56,8 @@ struct Vec4f
 	static Vec4f Min(const Vec4f& lhs, const Vec4f& rhs);
 	static Vec4f Max(const Vec4f& lhs, const Vec4f& rhs);
 	static bool Equal(const Vec4f& lhs, const Vec4f& rhs, float epsilon);
+	static Vec4f Transform(const Vec4f& lhs, const Mat43f& rhs);
+	static Vec4f Transform(const Vec4f& lhs, const Mat44f& rhs);
 };
 
 inline Vec4f operator+(const Vec4f& lhs, const Vec4f& rhs) { return Vec4f{lhs.s + rhs.s}; }
@@ -68,12 +70,12 @@ inline Vec4f operator/(const Vec4f& lhs, const Vec4f& rhs) { return Vec4f{lhs.s 
 
 inline bool operator==(const Vec4f& lhs, const Vec4f& rhs)
 {
-	return SIMD4f::ToComparedMask(SIMD4f::Equal(lhs.s, rhs.s)) == 0xf;
+	return SIMD4f::MoveMask(SIMD4f::Equal(lhs.s, rhs.s)) == 0xf;
 }
 
 inline bool operator!=(const Vec4f& lhs, const Vec4f& rhs)
 {
-	return SIMD4f::ToComparedMask(SIMD4f::Equal(lhs.s, rhs.s)) != 0xf;
+	return SIMD4f::MoveMask(SIMD4f::Equal(lhs.s, rhs.s)) != 0xf;
 }
 
 inline Vec4f Vec4f::Sqrt(const Vec4f& i)
@@ -103,7 +105,7 @@ inline Vec4f Vec4f::Max(const Vec4f& lhs, const Vec4f& rhs)
 
 inline bool Vec4f::Equal(const Vec4f& lhs, const Vec4f& rhs, float epsilon)
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::NearEqual(lhs.s, rhs.s, epsilon)) & 0xf) == 0xf;
+	return (SIMD4f::MoveMask(SIMD4f::NearEqual(lhs.s, rhs.s, epsilon)) & 0xf) == 0xf;
 }
 
 } // namespace Effekseer

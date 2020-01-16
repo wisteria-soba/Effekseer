@@ -137,7 +137,9 @@ struct alignas(16) SIMD4f
 		return SIMD4f{in.f[indexX], in.f[indexY], in.f[indexZ], in.f[indexW]};
 	}
 
-	static uint32_t ToComparedMask(const SIMD4f& in);
+	template <uint32_t X, uint32_t Y, uint32_t Z, uint32_t W>
+	static SIMD4f Mask();
+	static uint32_t MoveMask(const SIMD4f& in);
 	static SIMD4f Equal(const SIMD4f& lhs, const SIMD4f& rhs);
 	static SIMD4f NotEqual(const SIMD4f& lhs, const SIMD4f& rhs);
 	static SIMD4f LessThan(const SIMD4f& lhs, const SIMD4f& rhs);
@@ -338,7 +340,62 @@ inline SIMD4f SIMD4f::MulSub(const SIMD4f& a, const SIMD4f& b, const SIMD4f& c)
 	return ret;
 }
 
-inline uint32_t SIMD4f::ToComparedMask(const SIMD4f& in)
+inline SIMD4f SIMD4f::Dot3(const SIMD4f& lhs, const SIMD4f& rhs)
+{
+	SIMD4f muled = lhs * rhs;
+	return SIMD4f{muled.f[0] + muled.f[1] + muled.f[2], 0.0f, 0.0f, 0.0f};
+}
+
+inline SIMD4f SIMD4f::Cross3(const SIMD4f& lhs, const SIMD4f& rhs)
+{
+	return SIMD4f::Swizzle<1,2,0,3>(lhs.s) * SIMD4f::Swizzle<2,0,1,3>(rhs.s) -
+		SIMD4f::Swizzle<2,0,1,3>(lhs.s) * SIMD4f::Swizzle<1,2,0,3>(rhs.s);
+}
+
+template<size_t LANE>
+static SIMD4f SIMD4f::MulLane(const SIMD4f& lhs, const SIMD4f& rhs)
+{
+	static_assert(LANE < 4, "LANE is must be less than 4.");
+	return lhs * rhs.f[LANE];
+}
+
+template<size_t LANE>
+static SIMD4f SIMD4f::MulAddLane(const SIMD4f& a, const SIMD4f& b, const SIMD4f& c)
+{
+	static_assert(LANE < 4, "LANE is must be less than 4.");
+	return a + b * c.f[LANE];
+}
+
+template<size_t LANE>
+static SIMD4f SIMD4f::MulSubLane(const SIMD4f& a, const SIMD4f& b, const SIMD4f& c)
+{
+	static_assert(LANE < 4, "LANE is must be less than 4.");
+	return a - b * c.f[LANE];
+}
+
+template <uint32_t indexX, uint32_t indexY, uint32_t indexZ, uint32_t indexW>
+static SIMD4f SIMD4f::Swizzle(const SIMD4f& in)
+{
+	static_assert(indexX < 4, "indexX is must be less than 4.");
+	static_assert(indexY < 4, "indexY is must be less than 4.");
+	static_assert(indexZ < 4, "indexZ is must be less than 4.");
+	static_assert(indexW < 4, "indexW is must be less than 4.");
+	return SIMD4f{in.f[indexX], in.f[indexY], in.f[indexZ], in.f[indexW]};
+}
+
+
+template <uint32_t X, uint32_t Y, uint32_t Z, uint32_t W>
+inline static SIMD4f SIMD4f::Mask()
+{
+	SIMD4f ret;
+	ret.i[0] = 0xffffffff * X;
+	ret.i[1] = 0xffffffff * Y;
+	ret.i[2] = 0xffffffff * Z;
+	ret.i[3] = 0xffffffff * W;
+	return ret;
+}
+
+inline uint32_t SIMD4f::MoveMask(const SIMD4f& in)
 {
 	return (in.i[0] & 0x1) | (in.i[1] & 0x2) | (in.i[2] & 0x4) | (in.i[3] & 0x8);
 }

@@ -500,7 +500,7 @@ bool RendererImplemented::BeginRendering()
 {
 	assert( m_device != NULL );
 
-	::Effekseer::Matrix44::Mul( m_cameraProj, m_camera, m_proj );
+	m_cameraProj = m_camera * m_proj;
 	
 	// ステートを保存する
 	if( m_restorationOfStates )
@@ -596,9 +596,9 @@ int32_t RendererImplemented::GetSquareMaxCount() const
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-const ::Effekseer::Vector3D& RendererImplemented::GetLightDirection() const
+::Effekseer::Vector3D RendererImplemented::GetLightDirection() const
 {
-	return m_lightDirection;
+	return ToStruct(m_lightDirection);
 }
 
 //----------------------------------------------------------------------------------
@@ -644,9 +644,9 @@ void RendererImplemented::SetLightAmbientColor( const ::Effekseer::Color& color 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-const ::Effekseer::Matrix44& RendererImplemented::GetProjectionMatrix() const
+::Effekseer::Matrix44 RendererImplemented::GetProjectionMatrix() const
 {
-	return m_proj;
+	return ToStruct(m_proj);
 }
 
 //----------------------------------------------------------------------------------
@@ -660,9 +660,9 @@ void RendererImplemented::SetProjectionMatrix( const ::Effekseer::Matrix44& mat 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-const ::Effekseer::Matrix44& RendererImplemented::GetCameraMatrix() const
+::Effekseer::Matrix44 RendererImplemented::GetCameraMatrix() const
 {
-	return m_camera;
+	return ToStruct(m_camera);
 }
 
 //----------------------------------------------------------------------------------
@@ -670,14 +670,14 @@ const ::Effekseer::Matrix44& RendererImplemented::GetCameraMatrix() const
 //----------------------------------------------------------------------------------
 void RendererImplemented::SetCameraMatrix(const ::Effekseer::Matrix44& mat)
 {
-	m_cameraFrontDirection = ::Effekseer::Vector3D(mat.Values[0][2], mat.Values[1][2], mat.Values[2][2]);
+	m_cameraFrontDirection = ::Effekseer::Vec3f(mat.Values[0][2], mat.Values[1][2], mat.Values[2][2]);
 
-	auto localPos = ::Effekseer::Vector3D(-mat.Values[3][0], -mat.Values[3][1], -mat.Values[3][2]);
+	auto localPos = ::Effekseer::Vec3f(-mat.Values[3][0], -mat.Values[3][1], -mat.Values[3][2]);
 	auto f = m_cameraFrontDirection;
-	auto r = ::Effekseer::Vector3D(mat.Values[0][0], mat.Values[1][0], mat.Values[2][0]);
-	auto u = ::Effekseer::Vector3D(mat.Values[0][1], mat.Values[1][1], mat.Values[2][1]);
+	auto r = ::Effekseer::Vec3f(mat.Values[0][0], mat.Values[1][0], mat.Values[2][0]);
+	auto u = ::Effekseer::Vec3f(mat.Values[0][1], mat.Values[1][1], mat.Values[2][1]);
 
-	m_cameraPosition = r * localPos.X + u * localPos.Y + f * localPos.Z;
+	m_cameraPosition = r * localPos.GetX() + u * localPos.GetY() + f * localPos.GetZ();
 
 	m_camera = mat;
 }
@@ -685,19 +685,19 @@ void RendererImplemented::SetCameraMatrix(const ::Effekseer::Matrix44& mat)
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-::Effekseer::Matrix44& RendererImplemented::GetCameraProjectionMatrix()
+::Effekseer::Matrix44 RendererImplemented::GetCameraProjectionMatrix() const
 {
-	return m_cameraProj;
+	return ToStruct(m_cameraProj);
 }
 
 ::Effekseer::Vector3D RendererImplemented::GetCameraFrontDirection() const
 {
-	return m_cameraFrontDirection;
+	return ToStruct(m_cameraFrontDirection);
 }
 
 ::Effekseer::Vector3D RendererImplemented::GetCameraPosition() const
 {
-	return m_cameraPosition;
+	return ToStruct(m_cameraPosition);
 }
 
 void RendererImplemented::SetCameraParameter(const ::Effekseer::Vector3D& front, const ::Effekseer::Vector3D& position)

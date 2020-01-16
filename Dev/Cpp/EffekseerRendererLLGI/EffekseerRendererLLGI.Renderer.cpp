@@ -444,7 +444,7 @@ int32_t RendererImplemented::GetSquareMaxCount() const { return m_squareMaxCount
 
 ::EffekseerRenderer::RenderStateBase* RendererImplemented::GetRenderState() { return m_renderState; }
 
-const ::Effekseer::Vector3D& RendererImplemented::GetLightDirection() const { return m_lightDirection; }
+::Effekseer::Vector3D RendererImplemented::GetLightDirection() const { return m_lightDirection; }
 
 void RendererImplemented::SetLightDirection(const ::Effekseer::Vector3D& direction) { m_lightDirection = direction; }
 
@@ -456,11 +456,11 @@ const ::Effekseer::Color& RendererImplemented::GetLightAmbientColor() const { re
 
 void RendererImplemented::SetLightAmbientColor(const ::Effekseer::Color& color) { m_lightAmbient = color; }
 
-const ::Effekseer::Matrix44& RendererImplemented::GetProjectionMatrix() const { return m_proj; }
+::Effekseer::Matrix44 RendererImplemented::GetProjectionMatrix() const { return m_proj; }
 
 void RendererImplemented::SetProjectionMatrix(const ::Effekseer::Matrix44& mat) { m_proj = mat; }
 
-const ::Effekseer::Matrix44& RendererImplemented::GetCameraMatrix() const { return m_camera; }
+::Effekseer::Matrix44 RendererImplemented::GetCameraMatrix() const { return m_camera; }
 
 void RendererImplemented::SetCameraMatrix(const ::Effekseer::Matrix44& mat)
 {
@@ -476,11 +476,11 @@ void RendererImplemented::SetCameraMatrix(const ::Effekseer::Matrix44& mat)
 	m_camera = mat;
 }
 
-::Effekseer::Matrix44& RendererImplemented::GetCameraProjectionMatrix() { return m_cameraProj; }
+::Effekseer::Matrix44 RendererImplemented::GetCameraProjectionMatrix() const { return ToStruct(m_cameraProj); }
 
-::Effekseer::Vector3D RendererImplemented::GetCameraFrontDirection() const { return m_cameraFrontDirection; }
+::Effekseer::Vector3D RendererImplemented::GetCameraFrontDirection() const { return ToStruct(m_cameraFrontDirection); }
 
-::Effekseer::Vector3D RendererImplemented::GetCameraPosition() const { return m_cameraPosition; }
+::Effekseer::Vector3D RendererImplemented::GetCameraPosition() const { return ToStruct(m_cameraPosition); }
 
 void RendererImplemented::SetCameraParameter(const ::Effekseer::Vector3D& front, const ::Effekseer::Vector3D& position)
 {

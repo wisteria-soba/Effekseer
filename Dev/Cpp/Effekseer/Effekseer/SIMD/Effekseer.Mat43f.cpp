@@ -39,7 +39,7 @@ bool Mat43f::IsValid() const
 		SIMD4f::Equal(X, inf) | 
 		SIMD4f::Equal(Y, inf) | 
 		SIMD4f::Equal(Z, inf);
-	return SIMD4f::ToComparedMask(res) == 0;
+	return SIMD4f::MoveMask(res) == 0;
 }
 
 //----------------------------------------------------------------------------------
@@ -104,13 +104,23 @@ void Mat43f::GetSRT(Vec3f& s, Mat43f& r, Vec3f& t) const
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
+void Mat43f::SetTranslation(const Vec3f& t)
+{
+	X.SetW(t.GetX());
+	Y.SetW(t.GetY());
+	Z.SetW(t.GetZ());
+}
+
+//----------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------
 bool Mat43f::Equal(const Mat43f& lhs, const Mat43f& rhs, float epsilon)
 {
 	SIMD4f ret =
 		SIMD4f::NearEqual(lhs.X, rhs.X, epsilon) &
 		SIMD4f::NearEqual(lhs.Y, rhs.Y, epsilon) &
 		SIMD4f::NearEqual(lhs.Z, rhs.Z, epsilon);
-	return (SIMD4f::ToComparedMask(ret) & 0xf) == 0xf;
+	return (SIMD4f::MoveMask(ret) & 0xf) == 0xf;
 
 }
 

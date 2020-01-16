@@ -35,12 +35,16 @@ public:
 
 inline Vector2D ToStruct(const Vec2f& o)
 {
-	return {o.GetX(), o.GetY()};
+	Vector2D ret;
+	Vec2f::Store(&ret, o);
+	return ret;
 }
 
 inline Vector3D ToStruct(const Vec3f& o)
 {
-	return {o.GetX(), o.GetY(), o.GetZ()};
+	Vector3D ret;
+	Vec3f::Store(&ret, o);
+	return ret;
 }
 
 inline Matrix43 ToStruct(const Mat43f& o)

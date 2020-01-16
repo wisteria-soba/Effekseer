@@ -147,7 +147,7 @@ public:
 	/**
 		@brief	ライトの方向を取得する。
 	*/
-	const ::Effekseer::Vector3D& GetLightDirection() const override;
+	::Effekseer::Vector3D GetLightDirection() const override;
 
 	/**
 		@brief	ライトの方向を設定する。
@@ -177,7 +177,7 @@ public:
 	/**
 		@brief	投影行列を取得する。
 	*/
-	const ::Effekseer::Matrix44& GetProjectionMatrix() const override;;
+	::Effekseer::Matrix44 GetProjectionMatrix() const override;;
 
 	/**
 		@brief	投影行列を設定する。
@@ -187,7 +187,7 @@ public:
 	/**
 		@brief	カメラ行列を取得する。
 	*/
-	const ::Effekseer::Matrix44& GetCameraMatrix() const override;
+	::Effekseer::Matrix44 GetCameraMatrix() const override;
 
 	/**
 		@brief	カメラ行列を設定する。
@@ -203,7 +203,7 @@ public:
 	/**
 		@brief	カメラプロジェクション行列を取得する。
 	*/
-	::Effekseer::Matrix44& GetCameraProjectionMatrix() override;
+	::Effekseer::Matrix44 GetCameraProjectionMatrix() const override;
 
 	/**
 		@brief	スプライトレンダラーを生成する。

@@ -625,7 +625,7 @@ int32_t RendererImplemented::GetSquareMaxCount() const
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-const ::Effekseer::Vector3D& RendererImplemented::GetLightDirection() const
+::Effekseer::Vector3D RendererImplemented::GetLightDirection() const
 {
 	return m_lightDirection;
 }
@@ -673,7 +673,7 @@ void RendererImplemented::SetLightAmbientColor( const ::Effekseer::Color& color 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-const ::Effekseer::Matrix44& RendererImplemented::GetProjectionMatrix() const
+::Effekseer::Matrix44 RendererImplemented::GetProjectionMatrix() const
 {
 	return m_proj;
 }
@@ -689,7 +689,7 @@ void RendererImplemented::SetProjectionMatrix( const ::Effekseer::Matrix44& mat 
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-const ::Effekseer::Matrix44& RendererImplemented::GetCameraMatrix() const
+::Effekseer::Matrix44 RendererImplemented::GetCameraMatrix() const
 {
 	return m_camera;
 }
@@ -714,7 +714,7 @@ void RendererImplemented::SetCameraMatrix( const ::Effekseer::Matrix44& mat )
 //----------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------
-::Effekseer::Matrix44& RendererImplemented::GetCameraProjectionMatrix()
+::Effekseer::Matrix44 RendererImplemented::GetCameraProjectionMatrix() const
 {
 	return m_cameraProj;
 }

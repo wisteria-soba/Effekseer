@@ -21,6 +21,7 @@ using Vertex = EffekseerRenderer::SimpleVertex;
 using VertexDistortion = EffekseerRenderer::VertexDistortion;
 
 class OriginalState
+	: public ::Effekseer::AlignedAllocationPolicy<16>
 {
 private:
 	std::array<ID3D11SamplerState*, Effekseer::TextureSlotMax> m_samplers;
@@ -72,6 +73,7 @@ public:
 class RendererImplemented
 	: public Renderer
 	, public ::Effekseer::ReferenceObject
+	, public ::Effekseer::AlignedAllocationPolicy<16>
 {
 friend class DeviceObject;
 
@@ -91,16 +93,16 @@ private:
 
 	EffekseerRenderer::StandardRenderer<RendererImplemented, Shader, Vertex, VertexDistortion>*	m_standardRenderer;
 
-	::Effekseer::Vector3D	m_lightDirection;
+	::Effekseer::Vec3f		m_lightDirection;
 	::Effekseer::Color		m_lightColor;
 	::Effekseer::Color		m_lightAmbient;
 
-	::Effekseer::Matrix44	m_proj;
-	::Effekseer::Matrix44	m_camera;
-	::Effekseer::Matrix44	m_cameraProj;
+	::Effekseer::Mat44f		m_proj;
+	::Effekseer::Mat44f		m_camera;
+	::Effekseer::Mat44f		m_cameraProj;
 
-	::Effekseer::Vector3D	m_cameraPosition;
-	::Effekseer::Vector3D	m_cameraFrontDirection;
+	::Effekseer::Vec3f		m_cameraPosition;
+	::Effekseer::Vec3f		m_cameraFrontDirection;
 
 	// 座標系
 	::Effekseer::CoordinateSystem			m_coordinateSystem;
@@ -183,7 +185,7 @@ public:
 	/**
 		@brief	ライトの方向を取得する。
 	*/
-	const ::Effekseer::Vector3D& GetLightDirection() const;
+	::Effekseer::Vector3D GetLightDirection() const;
 
 	/**
 		@brief	ライトの方向を設定する。
@@ -213,7 +215,7 @@ public:
 	/**
 		@brief	投影行列を取得する。
 	*/
-	const ::Effekseer::Matrix44& GetProjectionMatrix() const;
+	::Effekseer::Matrix44 GetProjectionMatrix() const;
 
 	/**
 		@brief	投影行列を設定する。
@@ -223,7 +225,7 @@ public:
 	/**
 		@brief	カメラ行列を取得する。
 	*/
-	const ::Effekseer::Matrix44& GetCameraMatrix() const;
+	::Effekseer::Matrix44 GetCameraMatrix() const;
 
 	/**
 		@brief	カメラ行列を設定する。
@@ -232,14 +234,14 @@ public:
 
 	::Effekseer::Vector3D GetCameraFrontDirection() const override;
 
-	::Effekseer::Vector3D GetCameraPosition() const  override;
+	::Effekseer::Vector3D GetCameraPosition() const override;
 
 	void SetCameraParameter(const ::Effekseer::Vector3D& front, const ::Effekseer::Vector3D& position)  override;
 
 	/**
 		@brief	カメラプロジェクション行列を取得する。
 	*/
-	::Effekseer::Matrix44& GetCameraProjectionMatrix();
+	::Effekseer::Matrix44 GetCameraProjectionMatrix() const override;
 
 	/**
 		@brief	スプライトレンダラーを生成する。

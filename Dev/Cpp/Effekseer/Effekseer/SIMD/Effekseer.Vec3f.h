@@ -10,6 +10,8 @@ namespace Effekseer
 
 struct Vector3D;
 struct vector3d;
+struct Mat43f;
+struct Mat44f;
 
 struct Vec3f
 {
@@ -42,6 +44,9 @@ struct Vec3f
 	bool IsZero(float epsiron = DefaultEpsilon) const;
 	Vec3f Normalize() const;
 
+	static Vec3f Load(const void* mem);
+	static void Store(void* mem, const Vec3f& i);
+
 	static Vec3f Sqrt(const Vec3f& i);
 	static Vec3f Rsqrt(const Vec3f& i);
 	static Vec3f Abs(const Vec3f& i);
@@ -50,6 +55,8 @@ struct Vec3f
 	static float Dot(const Vec3f& lhs, const Vec3f& rhs);
 	static Vec3f Cross(const Vec3f& lhs, const Vec3f& rhs);
 	static bool Equal(const Vec3f& lhs, const Vec3f& rhs, float epsilon = DefaultEpsilon);
+	static Vec3f Transform(const Vec3f& lhs, const Mat43f& rhs);
+	static Vec3f Transform(const Vec3f& lhs, const Mat44f& rhs);
 };
 
 inline Vec3f operator+(const Vec3f& lhs, const Vec3f& rhs)
@@ -84,12 +91,22 @@ inline Vec3f operator/(const Vec3f& lhs, float rhs)
 
 inline bool operator==(const Vec3f& lhs, const Vec3f& rhs)
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x07) == 0x7;
+	return (SIMD4f::MoveMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x07) == 0x7;
 }
 
 inline bool operator!=(const Vec3f& lhs, const Vec3f& rhs)
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x07) != 0x7;
+	return (SIMD4f::MoveMask(SIMD4f::Equal(lhs.s, rhs.s)) & 0x07) != 0x7;
+}
+
+inline Vec3f Vec3f::Load(const void* mem)
+{
+	return SIMD4f::Load3(mem);
+}
+
+inline void Vec3f::Store(void* mem, const Vec3f& i)
+{
+	SIMD4f::Store3(mem, i.s);
 }
 
 inline Vec3f Vec3f::Sqrt(const Vec3f& i)
@@ -119,19 +136,17 @@ inline Vec3f Vec3f::Max(const Vec3f& lhs, const Vec3f& rhs)
 
 inline float Vec3f::Dot(const Vec3f& lhs, const Vec3f& rhs)
 {
-	Vec3f muled = lhs * rhs;
-	return muled.GetX() + muled.GetY() + muled.GetZ();
+	return SIMD4f::Dot3(lhs.s, rhs.s).GetX();
 }
 
 inline Vec3f Vec3f::Cross(const Vec3f& lhs, const Vec3f& rhs)
 {
-	return SIMD4f::Swizzle<1,2,0,3>(lhs.s) * SIMD4f::Swizzle<2,0,1,3>(rhs.s) -
-		   SIMD4f::Swizzle<2,0,1,3>(lhs.s) * SIMD4f::Swizzle<1,2,0,3>(rhs.s);
+	return SIMD4f::Cross3(lhs.s, rhs.s);
 }
 
 inline bool Vec3f::Equal(const Vec3f& lhs, const Vec3f& rhs, float epsilon)
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::NearEqual(lhs.s, rhs.s, epsilon)) & 0x7) == 0x7;
+	return (SIMD4f::MoveMask(SIMD4f::NearEqual(lhs.s, rhs.s, epsilon)) & 0x7) == 0x7;
 }
 
 inline float Vec3f::GetSquaredLength() const
@@ -147,7 +162,7 @@ inline float Vec3f::GetLength() const
 
 inline bool Vec3f::IsZero(float epsiron) const
 {
-	return (SIMD4f::ToComparedMask(SIMD4f::IsZero(epsiron)) & 0x7) != 0;
+	return (SIMD4f::MoveMask(SIMD4f::IsZero(epsiron)) & 0x7) != 0;
 }
 
 inline Vec3f Vec3f::Normalize() const

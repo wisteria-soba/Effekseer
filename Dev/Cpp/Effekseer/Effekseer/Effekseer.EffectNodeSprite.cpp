@@ -196,7 +196,7 @@ void EffectNodeSprite::Rendering(const Instance& instance, const Instance* next_
 		SpriteRenderer::InstanceParameter instanceParameter;
 		instanceParameter.AllColor = instValues._color;
 
-		instanceParameter.SRTMatrix43 = ToStruct(instance.GetGlobalMatrix43());
+		instanceParameter.SRTMatrix43 = instance.GetGlobalMatrix43();
 
 		// Inherit Color
 		Color _color;
@@ -248,10 +248,10 @@ void EffectNodeSprite::Rendering(const Instance& instance, const Instance* next_
 		}
 		else if( SpritePosition.type == SpritePosition.Fixed )
 		{
-			instanceParameter.Positions[0] = ToStruct(SpritePosition.fixed.ll);
-			instanceParameter.Positions[1] = ToStruct(SpritePosition.fixed.lr);
-			instanceParameter.Positions[2] = ToStruct(SpritePosition.fixed.ul);
-			instanceParameter.Positions[3] = ToStruct(SpritePosition.fixed.ur);
+			instanceParameter.Positions[0] = SpritePosition.fixed.ll;
+			instanceParameter.Positions[1] = SpritePosition.fixed.lr;
+			instanceParameter.Positions[2] = SpritePosition.fixed.ul;
+			instanceParameter.Positions[3] = SpritePosition.fixed.ur;
 		}
 
 		instanceParameter.UV = instance.GetUV();

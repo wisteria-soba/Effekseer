@@ -35,7 +35,11 @@ struct Mat43f
 
 	void GetSRT(Vec3f& s, Mat43f& r, Vec3f& t) const;
 
-	void operator*=(const Mat43f& rhs);
+	void SetTranslation(const Vec3f& t);
+
+	Mat43f& operator*=(const Mat43f& rhs);
+
+	Mat43f& operator*=(float rhs);
 
 	static const Mat43f Identity;
 
@@ -109,28 +113,47 @@ inline Mat43f operator*(const Mat43f& lhs, const Mat43f& rhs)
 	return res;
 }
 
-inline Vec3f operator*(const Mat43f& lhs, const Vec3f& rhs)
+inline Vec3f Vec3f::Transform(const Vec3f& lhs, const Mat43f& rhs)
 {
-	SIMD4f rhs4 = rhs.s;
-	rhs4.SetW(1.0f);
+	SIMD4f s0 = rhs.X;
+	SIMD4f s1 = rhs.Y;
+	SIMD4f s2 = rhs.Z;
+	SIMD4f s3 = SIMD4f::SetZero();
+	SIMD4f::Transpose(s0, s1, s2, s3);
 
-	SIMD4f res = SIMD4f::MulLane<0>(lhs.X, rhs4);
-	res = SIMD4f::MulAddLane<1>(res, lhs.Y, rhs4);
-	res = SIMD4f::MulAddLane<2>(res, lhs.Z, rhs4);
+	SIMD4f res = SIMD4f::MulAddLane<0>(s3, s0, lhs.s);
+	res = SIMD4f::MulAddLane<1>(res, s1, lhs.s);
+	res = SIMD4f::MulAddLane<2>(res, s2, lhs.s);
 	return Vec3f{res};
 }
 
-inline Vec4f operator*(const Mat43f& lhs, const Vec4f& rhs)
+inline Vec4f Vec4f::Transform(const Vec4f& lhs, const Mat43f& rhs)
 {
-	SIMD4f res = SIMD4f::MulLane<0>(lhs.X, rhs.s);
-	res = SIMD4f::MulAddLane<1>(res, lhs.Y, rhs.s);
-	res = SIMD4f::MulAddLane<2>(res, lhs.Z, rhs.s);
-	return Vec4f{res};
+	SIMD4f s0 = rhs.X;
+	SIMD4f s1 = rhs.Y;
+	SIMD4f s2 = rhs.Z;
+	SIMD4f s3 = SIMD4f(0.0f, 0.0f, 0.0f, 1.0f);
+	SIMD4f::Transpose(s0, s1, s2, s3);
+
+	SIMD4f res = SIMD4f::MulLane<0>(s0, lhs.s);
+	res = SIMD4f::MulAddLane<1>(res, s1, lhs.s);
+	res = SIMD4f::MulAddLane<2>(res, s2, lhs.s);
+	res = SIMD4f::MulAddLane<3>(res, s3, lhs.s);
+	return res;
 }
 
-inline void Mat43f::operator*=(const Mat43f& rhs)
+inline Mat43f& Mat43f::operator*=(const Mat43f& rhs)
 {
 	*this = *this * rhs;
+	return *this;
+}
+
+inline Mat43f& Mat43f::operator*=(float rhs)
+{
+	X *= rhs;
+	Y *= rhs;
+	Z *= rhs;
+	return *this;
 }
 
 } // namespace Effekseer
