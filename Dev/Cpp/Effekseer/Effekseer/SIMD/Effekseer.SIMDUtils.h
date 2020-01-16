@@ -49,51 +49,33 @@ inline Vector3D ToStruct(const Vec3f& o)
 
 inline Matrix43 ToStruct(const Mat43f& o)
 {
+	SIMD4f tx = o.X;
+	SIMD4f ty = o.Y;
+	SIMD4f tz = o.Z;
+	SIMD4f tw = SIMD4f::SetZero();
+	SIMD4f::Transpose(tx, ty, tz, tw);
+
 	Matrix43 ret;
-
-	ret.Value[0][0] = o.X.GetX();
-	ret.Value[0][1] = o.Y.GetX();
-	ret.Value[0][2] = o.Z.GetX();
-
-	ret.Value[1][0] = o.X.GetY();
-	ret.Value[1][1] = o.Y.GetY();
-	ret.Value[1][2] = o.Z.GetY();
-
-	ret.Value[2][0] = o.X.GetZ();
-	ret.Value[2][1] = o.Y.GetZ();
-	ret.Value[2][2] = o.Z.GetZ();
-
-	ret.Value[3][0] = o.X.GetW();
-	ret.Value[3][1] = o.Y.GetW();
-	ret.Value[3][2] = o.Z.GetW();
-
+	SIMD4f::Store3(ret.Value[0], tx);
+	SIMD4f::Store3(ret.Value[1], ty);
+	SIMD4f::Store3(ret.Value[2], tz);
+	SIMD4f::Store3(ret.Value[3], tw);
 	return ret;
 }
 
 inline Matrix44 ToStruct(const Mat44f& o)
 {
+	SIMD4f tx = o.X;
+	SIMD4f ty = o.Y;
+	SIMD4f tz = o.Z;
+	SIMD4f tw = o.W;
+	SIMD4f::Transpose(tx, ty, tz, tw);
+
 	Matrix44 ret;
-
-	ret.Values[0][0] = o.X.GetX();
-	ret.Values[0][1] = o.Y.GetX();
-	ret.Values[0][2] = o.Z.GetX();
-	ret.Values[0][3] = o.W.GetX();
-
-	ret.Values[1][0] = o.X.GetY();
-	ret.Values[1][1] = o.Y.GetY();
-	ret.Values[1][2] = o.Z.GetY();
-	ret.Values[1][3] = o.W.GetY();
-
-	ret.Values[2][0] = o.X.GetZ();
-	ret.Values[2][1] = o.Y.GetZ();
-	ret.Values[2][2] = o.Z.GetZ();
-	ret.Values[2][3] = o.W.GetZ();
-
-	ret.Values[3][0] = o.X.GetW();
-	ret.Values[3][1] = o.Y.GetW();
-	ret.Values[3][2] = o.Z.GetW();
-	ret.Values[3][3] = o.W.GetW();
-
+	SIMD4f::Store4(ret.Values[0], tx);
+	SIMD4f::Store4(ret.Values[1], ty);
+	SIMD4f::Store4(ret.Values[2], tz);
+	SIMD4f::Store4(ret.Values[3], tw);
 	return ret;
 }
 

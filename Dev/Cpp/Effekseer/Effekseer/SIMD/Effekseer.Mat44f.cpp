@@ -19,11 +19,12 @@ const Mat44f Mat44f::Identity = Mat44f(
 //
 //----------------------------------------------------------------------------------
 Mat44f::Mat44f(const Matrix44& mat)
-	: X(mat.Values[0][0], mat.Values[1][0], mat.Values[2][0], mat.Values[3][0])
-	, Y(mat.Values[0][1], mat.Values[1][1], mat.Values[2][1], mat.Values[3][1])
-	, Z(mat.Values[0][2], mat.Values[1][2], mat.Values[2][2], mat.Values[3][2])
-	, W(mat.Values[0][3], mat.Values[1][3], mat.Values[2][3], mat.Values[3][3])
 {
+	X = SIMD4f::Load4(mat.Values[0]);
+	Y = SIMD4f::Load4(mat.Values[1]);
+	Z = SIMD4f::Load4(mat.Values[2]);
+	W = SIMD4f::Load4(mat.Values[3]);
+	SIMD4f::Transpose(X, Y, Z, W);
 }
 
 //----------------------------------------------------------------------------------

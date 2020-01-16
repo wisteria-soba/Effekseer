@@ -19,10 +19,12 @@ const Mat43f Mat43f::Identity = Mat43f(
 //
 //----------------------------------------------------------------------------------
 Mat43f::Mat43f(const Matrix43& mat)
-	: X(mat.Value[0][0], mat.Value[1][0], mat.Value[2][0], mat.Value[3][0])
-	, Y(mat.Value[0][1], mat.Value[1][1], mat.Value[2][1], mat.Value[3][1])
-	, Z(mat.Value[0][2], mat.Value[1][2], mat.Value[2][2], mat.Value[3][2])
 {
+	X = SIMD4f::Load3(mat.Value[0]);
+	Y = SIMD4f::Load3(mat.Value[1]);
+	Z = SIMD4f::Load3(mat.Value[2]);
+	SIMD4f W = SIMD4f::Load3(mat.Value[3]);
+	SIMD4f::Transpose(X, Y, Z, W);
 }
 
 //----------------------------------------------------------------------------------
