@@ -297,8 +297,8 @@ inline SIMD4f SIMD4f::Dot3(const SIMD4f& lhs, const SIMD4f& rhs)
 
 inline SIMD4f SIMD4f::Cross3(const SIMD4f& lhs, const SIMD4f& rhs)
 {
-	return SIMD4f::Swizzle<1,2,0,3>(lhs.s) * SIMD4f::Swizzle<2,0,1,3>(rhs.s) -
-		SIMD4f::Swizzle<2,0,1,3>(lhs.s) * SIMD4f::Swizzle<1,2,0,3>(rhs.s);
+	return SIMD4f::Swizzle<1,2,0,3>(lhs) * SIMD4f::Swizzle<2,0,1,3>(rhs) -
+		SIMD4f::Swizzle<2,0,1,3>(lhs) * SIMD4f::Swizzle<1,2,0,3>(rhs);
 }
 
 template <uint32_t X, uint32_t Y, uint32_t Z, uint32_t W>
