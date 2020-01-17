@@ -42,9 +42,9 @@ struct Mat44f
 
 	Mat44f Transpose() const;
 
-	Mat44f& Mat44f::operator*=(const Mat44f& rhs);
+	Mat44f& operator*=(const Mat44f& rhs);
 	
-	Mat44f& Mat44f::operator*=(float rhs);
+	Mat44f& operator*=(float rhs);
 
 	static const Mat44f Identity;
 
