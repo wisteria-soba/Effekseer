@@ -2,6 +2,7 @@
 #ifndef __EFFEKSEER_SIMD_UTILS_H__
 #define __EFFEKSEER_SIMD_UTILS_H__
 
+#include <stdlib.h>
 #include "../Effekseer.Vector2D.h"
 #include "../Effekseer.Vector3D.h"
 #include "../Effekseer.Matrix43.h"
@@ -21,7 +22,9 @@ public:
 #ifdef _MSC_VER
 		return _mm_malloc(size, align);
 #else
-		return memalign(align, size);
+		void *ptr = nullptr;
+		posix_memalign(&ptr, align, size);
+		return ptr;
 #endif
 	}
 	static void operator delete(void* ptr) {

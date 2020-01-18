@@ -1,14 +1,14 @@
-﻿#include <cassert>
-#include "Effekseer.SIMD4f.h"
-#include "Effekseer.Vec2f.h"
-#include "Effekseer.Vec3f.h"
-#include "Effekseer.Vec4f.h"
-#include "Effekseer.Mat43f.h"
-#include "Effekseer.Mat44f.h"
-#include "../Effekseer.Vector2D.h"
-#include "../Effekseer.Vector3D.h"
-#include "../Effekseer.Matrix43.h"
-#include "../Effekseer.Matrix44.h"
+#include <cassert>
+#include "SIMD/Effekseer.SIMD4f.h"
+#include "SIMD/Effekseer.Vec2f.h"
+#include "SIMD/Effekseer.Vec3f.h"
+#include "SIMD/Effekseer.Vec4f.h"
+#include "SIMD/Effekseer.Mat43f.h"
+#include "SIMD/Effekseer.Mat44f.h"
+#include "Effekseer.Vector2D.h"
+#include "Effekseer.Vector3D.h"
+#include "Effekseer.Matrix43.h"
+#include "Effekseer.Matrix44.h"
 
 #define ASSERT(e) assert(e)
 //#define ASSERT(e) if (!(e)) printf("assert failed.\n");
