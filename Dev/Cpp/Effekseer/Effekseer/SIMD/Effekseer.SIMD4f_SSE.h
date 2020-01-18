@@ -302,7 +302,7 @@ inline SIMD4f SIMD4f::Cross3(const SIMD4f& lhs, const SIMD4f& rhs)
 }
 
 template <uint32_t X, uint32_t Y, uint32_t Z, uint32_t W>
-inline static SIMD4f Mask()
+inline SIMD4f SIMD4f::Mask()
 {
 	return _mm_setr_epi32(
 		(int)(0xffffffff * X), 
