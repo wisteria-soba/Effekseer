@@ -25,6 +25,7 @@ cbuffer PS_ConstanBuffer : register(b0)
     float4 emissiveScaling; // x:emissiveScaling
     float4 edgeColor;
     float4 edgeParameter; // x:threshold, y:colorScaling
+	// float4 depthReconstructionParam;
 };
 
 struct PS_Input

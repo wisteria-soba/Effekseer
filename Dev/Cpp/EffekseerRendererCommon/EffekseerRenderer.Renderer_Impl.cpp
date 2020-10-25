@@ -4,6 +4,12 @@
 namespace EffekseerRenderer
 {
 
+Renderer::Impl::~Impl()
+{
+	ES_SAFE_RELEASE(depthBackendTexture_);
+	ES_SAFE_DELETE(depthTexture_);
+}
+
 ::Effekseer::Vector3D Renderer::Impl::GetLightDirection() const
 {
 	return ToStruct(lightDirection_);
@@ -181,6 +187,30 @@ Effekseer::RenderMode Renderer::Impl::GetRenderMode() const
 void Renderer::Impl::SetRenderMode(Effekseer::RenderMode renderMode)
 {
 	renderMode_ = renderMode;
+}
+
+void Renderer::Impl::GetDepth(::Effekseer::Backend::Texture*& texture, std::array<float, 4>& reconstructionParam)
+{
+	texture = depthBackendTexture_;
+	reconstructionParam = reconstructionParam_;
+}
+
+void Renderer::Impl::SetDepth(::Effekseer::Backend::Texture* texture, const std::array<float, 4>& reconstructionParam)
+{
+	ES_SAFE_ADDREF(texture);
+	ES_SAFE_RELEASE(depthBackendTexture_);
+	depthBackendTexture_ = texture;
+	reconstructionParam_ = reconstructionParam;
+
+	if (texture != nullptr && depthTexture_ == nullptr)
+	{
+		depthTexture_ = new Effekseer::TextureData();
+		depthTexture_->TexturePtr = depthBackendTexture_;
+	}
+	else if (texture == nullptr && depthTexture_ != nullptr)
+	{
+		ES_SAFE_DELETE(depthTexture_);
+	}
 }
 
 } // namespace EffekseerRenderer

@@ -157,6 +157,16 @@ void Renderer::SetBackgroundTexture(::Effekseer::TextureData* textureData)
 	// not implemented
 	assert(0);
 }
+
+void Renderer::GetDepth(::Effekseer::Backend::Texture*& texture, std::array<float, 4>& reconstructionParam)
+{
+	impl->GetDepth(texture, reconstructionParam);
+}
+
+void Renderer::SetDepth(::Effekseer::Backend::Texture* texture, const std::array<float, 4>& reconstructionParam)
+{
+	impl->SetDepth(texture, reconstructionParam);
+}
 /*
 Model::InternalModel::InternalModel()
 {

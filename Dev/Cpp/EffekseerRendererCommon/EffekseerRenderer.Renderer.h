@@ -413,6 +413,13 @@ public:
 
 	/**
 		@brief	
+		\~English	Get a depth texture and parameters to reconstruct from z to depth
+		\~Japanese	深度画像とZから深度を復元するためのパラメーターを取得する。
+	*/
+	virtual void GetDepth(::Effekseer::Backend::Texture*& texture, std::array<float, 4>& reconstructionParam);
+
+	/**
+		@brief	
 		\~English	Specify a depth texture and parameters to reconstruct from z to depth
 		\~Japanese	深度画像とZから深度を復元するためのパラメーターを設定する。
 		@note
@@ -422,9 +429,7 @@ public:
 		- フェードの度合いのつけ方をUE4を参考に実装する。
 		- ツール側で床を出せるようにする。
 	*/
-	virtual void SetDepth(::Effekseer::Backend::Texture* texture, std::array<float, 4> reconstructionParam)
-	{
-	}
+	virtual void SetDepth(::Effekseer::Backend::Texture* texture, const std::array<float, 4>& reconstructionParam);
 };
 
 /**

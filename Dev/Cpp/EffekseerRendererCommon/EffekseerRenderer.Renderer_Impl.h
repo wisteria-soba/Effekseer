@@ -9,7 +9,7 @@
 namespace EffekseerRenderer
 {
 
-class Renderer::Impl : public ::Effekseer::AlignedAllocationPolicy<16>
+class Renderer::Impl final : public ::Effekseer::AlignedAllocationPolicy<16>
 {
 private:
 	::Effekseer::Mat44f projectionMat_;
@@ -31,11 +31,18 @@ private:
 
 	::Effekseer::TextureData* whiteProxyTexture_ = nullptr;
 	::Effekseer::TextureData* normalProxyTexture_ = nullptr;
+	::Effekseer::TextureData* depthTexture_ = nullptr;
+
+	::Effekseer::Backend::Texture* depthBackendTexture_ = nullptr;
+	std::array<float, 4> reconstructionParam_;
 
 public:
 	int32_t drawcallCount = 0;
 	int32_t drawvertexCount = 0;
 	bool isRenderModeValid = true;
+
+	Impl() = default;
+	~Impl();
 
 	::Effekseer::Vector3D GetLightDirection() const;
 
@@ -96,6 +103,12 @@ public:
 	Effekseer::RenderMode GetRenderMode() const;
 
 	void SetRenderMode(Effekseer::RenderMode renderMode);
+
+	void GetDepth(::Effekseer::TextureData*& texture, std::array<float, 4>& reconstructionParam);
+
+	void GetDepth(::Effekseer::Backend::Texture*& texture, std::array<float, 4>& reconstructionParam);
+
+	void SetDepth(::Effekseer::Backend::Texture* texture, const std::array<float, 4>& reconstructionParam);
 };
 
 } // namespace EffekseerRenderer
